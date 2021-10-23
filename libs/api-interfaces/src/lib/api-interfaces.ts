@@ -4,14 +4,14 @@ export interface Message {
 
 
 export interface Customer {
-  customerId: string;
+  id: string;
   customerName: string;
   phone: string;
   customerAddress: string;
 }
 
 export interface Order {
-  orderId: string;
+  id: string;
   orderNumber: number;
   customerId: string;
   orderDate: string;
@@ -20,7 +20,7 @@ export interface Order {
 }
 
 export interface Supplier {
-  supplierId: string;
+  id: string;
   companyName: string;
   phone: string;
   address: string;
