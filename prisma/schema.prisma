@@ -13,12 +13,14 @@ datasource db {
 model Book {
   id          String        @id @default(uuid())
   title       String        @db.VarChar(255)
-  content     String?
-  published   Boolean       @default(false)
+  author      String
   createdAt   DateTime      @default(now())
+  supplierId  String
+  Supplier    Supplier?     @relation(fields: [supplierId], references: [id])
+  RentedBooks RentedBooks[]
+  Order       Order[]
   User        User?         @relation(fields: [userId], references: [id])
   userId      String?
-  RentedBooks RentedBooks[]
 }
 
 model Category {
@@ -36,14 +38,39 @@ model User {
   role        Role          @default(USER)
   createdAt   DateTime      @default(now()) @db.Timestamp(6)
   RentedBooks RentedBooks[]
+  Order       Order[]
 }
 
 model RentedBooks {
-  id     String @id @default(uuid())
-  userId String
-  bookId String
-  user   User   @relation(fields: [userId], references: [id])
-  book   Book   @relation(fields: [bookId], references: [id])
+  id           String   @id @default(uuid())
+  userId       String
+  bookId       String
+  rentedDate   DateTime
+  dateToReturn DateTime
+  dateReturned DateTime
+  user         User     @relation(fields: [userId], references: [id])
+  book         Book     @relation(fields: [bookId], references: [id])
+}
+
+model Supplier {
+  id          String @id @default(uuid())
+  companyName String
+  phone       String
+  address     String
+  Books       Book[]
+}
+
+model Order {
+  id             String   @id @default(uuid())
+  orderNumber    String
+  userId         String
+  bookId         String
+  orderDate      DateTime
+  totalAmount    Float
+  quantity       Int
+  shppingAddress String
+  user           User     @relation(fields: [userId], references: [id])
+  book           Book     @relation(fields: [bookId], references: [id])
 }
 
 enum Role {

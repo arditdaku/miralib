@@ -2,21 +2,35 @@ export interface Message {
   message: string;
 }
 
-
-export interface Customer {
+export interface User {
   id: string;
-  customerName: string;
-  phone: string;
-  customerAddress: string;
+  name?: string;
+  email: string;
+  phone?: string;
+  address: string;
+  Books: Book[];
+  role: Role;
+  RentedBooks: RentedBooks[];
+}
+
+export interface RentedBooks {
+  id: string;
+  userId: string;
+  bookId: string;
+  rentedDate: Date;
+  dateToReturn: Date;
+  dateReturned: Date;
 }
 
 export interface Order {
   id: string;
-  orderNumber: number;
-  customerId: string;
-  orderDate: string;
+  orderNumber: string;
+  userId: string;
+  bookId: string;
+  orderDate: Date;
   totalAmount: number;
-  customerAddress: string;
+  shppingAddress: string;
+  quantity: number;
 }
 
 export interface Supplier {
@@ -24,13 +38,16 @@ export interface Supplier {
   companyName: string;
   phone: string;
   address: string;
+  Books: Book[];
 }
 
-export interface Product {
-  productId: string;
-  productName: string;
+export interface Book {
+  id: string;
+  title: string;
+  author: string;
   supplierId: string;
-  unitPrice: number;
+  RentedBooks: RentedBooks[];
+  Order: Order[];
 }
 
 export interface OrderItem {
@@ -38,4 +55,9 @@ export interface OrderItem {
   productId: string;
   unitPrice: number;
   quantity: number;
+}
+
+enum Role {
+  USER,
+  ADMIN,
 }
